@@ -1,0 +1,60 @@
+body {
+    font-size: 62.5%;
+    background-image: url(src/21-9bk.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.infobar {
+    height: 15em;
+    display: flex;
+}
+
+.infobar span {
+    /* 使用flex实现垂直居中 https://blog.csdn.net/qq_18835599/article/details/115672902 */
+    display: flex;
+    align-items: center;
+
+    margin: 2em;
+    border: 1.5em solid #8c6900;
+    border-radius: 10em;
+    /* 使用辅助色标实现突变 https://www.jianshu.com/p/b7aac233bd29 */
+    background-image: linear-gradient(to top, #ffd24d 0%, #ffd24d 50%, #ffe699 50%, #ffe699 100%);
+}
+
+.infobar em {
+    color: #8a690f;
+    font-size: 5em;
+    font-weight: 800;
+    font-style: normal;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.date {
+    justify-content: center;
+    flex: 1 1 auto;
+}
+
+.money {
+    justify-content: flex-end;
+    flex: 2 1 auto;
+}
+
+.cook-area {
+    background-color: #ffd24d;
+    height: 60em;
+    margin: 3em;
+    margin-top: 10em;
+    border: 1.5em solid #ffffff;
+    border-radius: 5em;
+}
+
+.customer-area {
+    background-color: #ffa64d;
+    height: 60em;
+    margin: 3em;
+    margin-top: 40em;
+    border: 1.5em solid #ffffff;
+    border-radius: 5em;
+}
