@@ -41,7 +41,10 @@ body {
     flex: 2 1 auto;
 }
 
+/* COOK AREA */
 .cook-area {
+    display: flex;
+    align-items: center;
     background-color: #ffd24d;
     height: 60em;
     margin: 3em;
@@ -50,6 +53,22 @@ body {
     border-radius: 5em;
 }
 
+.cooks {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.cooks span {
+    margin: 4em;
+    width: 20em;
+    height: 20em;
+    border-radius: 100em;
+    background-image:  url(src/cook.png), linear-gradient(to right, #dddddd 50%, #aaaaaa 50%);
+    background-size: contain;
+}
+
+/* CUSTOMER AREA */
 .customer-area {
     background-color: #ffa64d;
     height: 60em;
