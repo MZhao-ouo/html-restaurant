@@ -70,10 +70,84 @@ body {
 
 /* CUSTOMER AREA */
 .customer-area {
+    display: flex;
+    align-items: center;
     background-color: #ffa64d;
     height: 60em;
     margin: 3em;
     margin-top: 40em;
     border: 1.5em solid #ffffff;
+    border-radius: 5em;
+}
+
+.customers {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.customers span {
+    margin: 2em;
+    width: 38em;
+    height: 20em;
+    border-radius: 100em;
+    background-image:  url(src/cook.png), linear-gradient(to right, #dddddd 50%, #aaaaaa 50%);
+    background-size: contain;
+}
+
+/* 等待区 */
+
+.waiting {
+    display: flex;
+    justify-content: flex-end;
+    justify-items: center;
+    align-items: center;
+    width: 100%;
+    height: 30em;
+    position: absolute;
+    left: 0;
+    top: 83%;
+    /* background-color: #aaaaaa; */
+    z-index: 998;
+}
+
+.waiting span {
+    width: 20em;
+    height: 20em;
+    margin: 1em;
+    border-radius: 100em;
+    border: 2em solid #ffffff;
+    background-image: url(src/customer2.png), linear-gradient(to right, #ff2626 50%, #b20000 50%);
+    background-size: contain;
+}
+
+/* 弹窗 */
+
+.shadow {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: black;
+    opacity: 0.6;
+    z-index: 999;
+}
+
+.point {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+.FlashNotice {
+    width: 80em;
+    height: 40em;
+    position: absolute;
+    left: -40em;
+    top: -17.5em;
+    background-color: #ffa64d;
+    z-index: 9999;
+    outline: 2em solid #ffffff;
     border-radius: 5em;
 }
