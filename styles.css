@@ -91,7 +91,7 @@ body {
     width: 38em;
     height: 20em;
     border-radius: 100em;
-    background-image:  url(src/cook.png), linear-gradient(to right, #dddddd 50%, #aaaaaa 50%);
+    background-image: url(src/cook.png), linear-gradient(to right, #dddddd 50%, #aaaaaa 50%);
     background-size: contain;
 }
 
@@ -102,9 +102,9 @@ body {
     justify-content: flex-end;
     justify-items: center;
     align-items: center;
-    width: 100%;
+    width: 90%;
     height: 30em;
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 83%;
     /* background-color: #aaaaaa; */
@@ -112,9 +112,9 @@ body {
 }
 
 .waiting span {
-    width: 20em;
-    height: 20em;
-    margin: 1em;
+    width: 16em;
+    height: 16em;
+    margin: -2em;
     border-radius: 100em;
     border: 2em solid #ffffff;
     background-image: url(src/customer2.png), linear-gradient(to right, #ff2626 50%, #b20000 50%);
@@ -141,13 +141,148 @@ body {
 }
 
 .FlashNotice {
-    width: 80em;
-    height: 40em;
+    width: 60em;
+    height: 30em;
     position: absolute;
-    left: -40em;
-    top: -17.5em;
+    left: -30em;
+    top: -15em;
     background-color: #ffa64d;
     z-index: 9999;
     outline: 2em solid #ffffff;
     border-radius: 5em;
+}
+
+.dialog {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    width: 90em;
+    height: 50em;
+    position: absolute;
+    left: -45em;
+    top: -25em;
+    background-color: #ffd24d;
+    outline: 2em solid #ffffff;
+    border-radius: 5em;
+    z-index: 9998;
+}
+
+.dialog-text {
+    width: 90%;
+    height: 50%;
+    /* position: inherit; */
+    margin: 2em;
+
+    display: flex;
+    flex-direction: column;
+    flex: 2 1 auto;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.dialog-text h1 {
+    color: #513a00;
+    font-size: 6em;
+    margin: 0.2em;
+}
+.dialog-text div {
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+}
+
+.dialog-text p, .dialog-text div span {
+    color: #8c6800;
+    font-size: 3.5em;
+}
+
+.button {
+    width: 20em;
+    height: 10em;
+    /* position: inherit; */
+    background-image: linear-gradient(to bottom, #ffe699 50%, #ffd24d 50%);
+    border-radius: 100em;
+    outline: 0.8em solid #8c6900;
+    margin: 4em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button p {
+    color: #8c6900;
+    font-size: 5em;
+    font-weight: 500;
+    /* 设置字间距 https://www.w3school.com.cn/css/css_text_spacing.asp */
+    letter-spacing: 0.1em;
+}
+
+#FWbutton {
+    width: 80%;
+    height: 20%;
+    flex: 1 1 auto;
+}
+
+/* 菜单 */
+#menu {
+    height: 140em;
+    top: -70em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-status {
+    display: flex;
+    width: 85%;
+    justify-content: right;
+    align-items: center;
+}
+
+.menu-status h1 {
+    font-size: 5em;
+    margin: 0;
+}
+
+.avatar {
+    width: 20em;
+    height: 20em;
+    border-radius: 100em;
+    background-color: #aaaaaa;
+    outline: #ffffff 2em solid;
+
+    z-index: 1000;
+    position: inherit;
+    top: -10em;
+    left: 8em;
+}
+
+.dishes {
+    display: flex;
+    width: 90%;
+    height: 70%;
+    background-color: #ffffff;
+    border: 1em #ca9801 solid;
+    border-radius: 3em;
+}
+
+.g-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 95%;
+}
+
+#confirm-button {
+    flex: 3 1 0;
+    height: 12em;
+}
+
+#cancel-button {
+    flex: 2 1 0;
+    height: 12em;
 }
