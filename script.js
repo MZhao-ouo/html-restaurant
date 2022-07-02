@@ -38,6 +38,7 @@ function order_cancel() {
 }
 //提交订单
 function order_confirm() {
+    total_money += 100;
     order_cancel();
 }
 //增加厨师
