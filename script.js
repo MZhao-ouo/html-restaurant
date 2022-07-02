@@ -38,8 +38,17 @@ function order_cancel() {
 }
 //提交订单
 function order_confirm() {
-    total_money += 100;
+    let earned_money = 0;
+    checkboxes = document.getElementsByTagName("input");
+    for (let checkbox of checkboxes) {
+        if (checkbox.checked == true) {
+            total_money += 10; 
+            checkbox.checked = false;            
+        }
+
+    }
     order_cancel();
+    total_money += earned_money;
 }
 //增加厨师
 function add_cook() {
