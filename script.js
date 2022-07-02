@@ -42,26 +42,34 @@ function order_confirm() {
 }
 //增加厨师
 function add_cook() {
-    new_cook = document.createElement("span");
-    // cookadd = document.getElementById("cookadd");
-    cookadd.before(new_cook);
-    cook_number++; 
+    if (total_money >= 100) {
+        total_money -= 100;
+        new_cook = document.createElement("span");
+        cookadd.before(new_cook);
+        cook_number++;         
+    }
     if (cook_number >= 6) {
         cookadd.removeEventListener("click", add_cook);
-        cookadd.parentNode.removeChild(cookadd);
-        return ;
+        cookadd.style.display = "none";
     }
+}
+//同步金币
+function show_money() {
+    money = document.getElementById("money");
+    money.children[0].textContent = total_money;
 }
 ///////////////////////////////////////////////////////////////////////////////
 
 startup_pop();
 
 // 游戏数据初始化
-total_money = 100;
+total_money = 123;
 cook_number = 1;
 
 order = document.querySelector(".waiting");
 order.addEventListener("click", order_start);
 
 cookadd = document.getElementById("cookadd");
-cookadd.addEventListener("click", add_cook)
+cookadd.addEventListener("click", add_cook);
+
+setInterval(show_money, 1);
