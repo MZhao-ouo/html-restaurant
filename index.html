@@ -22,12 +22,8 @@
 
         <div class="cook-area">
             <div class="cooks">
-                <span class="cook1"></span>
-                <span class="cook2"></span>
-                <span class="cook3"></span>
-                <span class="cook4"></span>
-                <span class="cook5"></span>
-                <span class="cook6"></span>
+                <span class="cook" id="cook1"></span>
+                <span class="cook" id="cookadd"></span>
             </div>
         </div>
 
@@ -45,15 +41,18 @@
             </div>
         </div>
 
+        <!-- Pre-Defined -->
+
+        <!-- 全屏遮罩 -->
+        <div class="shadow" id="shadow_id"></div>
+
         <!-- 弹窗 -->
-        <!-- <div class="shadow"></div> -->
-        <div class="point">
+        <div class="point" id="FlashNotice_id">
             <div class="FlashNotice"></div>            
         </div>
 
         <!-- 对话框 -->
-        <!-- <div class="shadow"></div>
-        <div class="point">
+        <div class="point" id="dialog_id">
             <div class="dialog">
                 <div class="dialog-text">
                     <h1>MOOC餐厅开业啦</h1>
@@ -68,14 +67,10 @@
                     <p>开始经营吧</p>
                 </div>
             </div>           
-        </div> -->
-
-        <!-- 全屏遮罩 -->
-        <!-- <div class="shadow"></div> -->
+        </div>
 
         <!-- 菜单 -->
-        <!-- <div class="shadow"></div>
-        <div class="point">
+        <div class="point" id="menu_id">
             <div class="dialog" id="menu">
                 <div class="avatar"></div>
 
@@ -83,7 +78,66 @@
                     <h1>ELON正在点菜</h1>
                 </div>
                 <div class="dishes">
-                    <h1>这里有一些菜</h1>
+                    <div class="menu_details" id="colddish">
+                        <em>凉菜（二选一，可不点）</em>
+                        <ul>
+                            <li><input type="checkbox" name="colddish" id="colddish1"><label for="colddish1">
+                                <span>凉拌SAN</span>
+                                <span>· · · · · · · · · · · ·</span>
+                                <span>￥6</span>
+                            </label></li>
+                            <li><input type="checkbox" name="colddish" id="colddish2"><label for="colddish2">
+                                <span>冷切DOM</span>
+                                <span>· · · · · · · · · · · ·</span>
+                                <span>￥4</span>
+                            </label></li>
+                        </ul>
+                    </div>
+                    <div class="menu_details" id="maindish">
+                        <em>主菜（五选一，必点）</em>
+                        <ul>
+                            <li><input type="radio" name="maindish" id="maindish1"><label for="maindish1">
+                                <span>UL炖LI</span>
+                                <span>· · · · · · · · · · · ·</span>
+                                <span>￥12</span>
+                            </label></li>
+                            <li><input type="radio" name="maindish" id="maindish2"><label for="maindish2">
+                                <span>红烧HEAD</span>
+                                <span>· · · · · · · · · · · ·</span>
+                                <span>￥15</span>
+                            </label></li>
+                            <li><input type="radio" name="maindish" id="maindish3"><label for="maindish3">
+                                <span>酥炸ECharts</span>
+                                <span>· · · · · · · · · · · ·</span>
+                                <span>￥18</span>
+                            </label></li>
+                            <li><input type="radio" name="maindish" id="maindish4"><label for="maindish4">
+                                <span>炙烤CSS</span>
+                                <span>· · · · · · · · · · · ·</span>
+                                <span>￥16</span>
+                            </label></li>
+                            <li><input type="radio" name="maindish" id="maindish5"><label for="maindish5">
+                                <span>清蒸DIV</span>
+                                <span>· · · · · · · · · · · ·</span>
+                                <span>￥12</span>
+                            </label></li>
+                        </ul>
+                    </div>
+                    <div class="menu_details" id="drink">
+                        <em>饮品（二选一，可不点）</em>
+                        <ul>
+                            <li><input type="checkbox" name="drink" id="drink1"><label for="drink1">
+                                <span>鲜榨flex</span>
+                                <span>· · · · · · · · · · · ·</span>
+                                <span>￥5</span>
+                            </label></li>
+                            <li><input type="checkbox" name="drink" id="drink2"><label for="drink2">
+                                <span>小程序奶茶</span>
+                                <span>· · · · · · · · · · · ·</span>
+                                <span>￥6</span>
+                            </label></li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="g-button">
                     <div class="button" id="confirm-button">
@@ -94,7 +148,7 @@
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
 
 
     </body>

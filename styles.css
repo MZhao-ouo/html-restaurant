@@ -1,5 +1,5 @@
 body {
-    font-size: 62.5%;
+    font-size: 63.5%;
     background-image: url(src/21-9bk.jpg);
     background-size: cover;
     background-repeat: no-repeat;
@@ -66,6 +66,12 @@ body {
     border-radius: 100em;
     background-image:  url(src/cook.png), linear-gradient(to right, #dddddd 50%, #aaaaaa 50%);
     background-size: contain;
+    outline: 1em solid white;
+}
+
+#cookadd {
+    background-image: none;
+    background-image:  url(src/no-chef.png);
 }
 
 /* CUSTOMER AREA */
@@ -124,6 +130,7 @@ body {
 /* 弹窗 */
 
 .shadow {
+    display: none;
     width: 100%;
     height: 100%;
     position: absolute;
@@ -135,6 +142,7 @@ body {
 }
 
 .point {
+    display: none;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -263,15 +271,63 @@ body {
 
 .dishes {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
     width: 90%;
     height: 70%;
     background-color: #ffffff;
     border: 1em #ca9801 solid;
+    margin-top: 2em;
     border-radius: 3em;
+}
+
+.menu_details {
+    font-size: 4em;
+    color: #8c6600;
+
+    display: flex;
+    flex-direction: column;
+    margin-left: 8%;
+}
+
+.menu_details input {
+    zoom: 300%;
+}
+
+.menu_details em {
+    font-style: normal;
+    font-weight: bolder;
+    color: #513a00;
+}
+
+.menu_details ul {
+    font-weight: normal;
+    list-style-type: none;
+}
+
+.menu_details ul li {
+    display: flex;
+    flex-direction: row;
+}
+
+.menu_details ul li label {
+    width: 16em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.menu_details span {
+    flex: 2 1 0;
+}
+
+.menu_details span:last-child {
+    flex: 1 1 0;
 }
 
 .g-button {
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     width: 95%;
