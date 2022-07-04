@@ -94,7 +94,7 @@ body {
     background-image: none;
     background-image: url(src/no-chef.png), linear-gradient(to right, #dddddd 50%, #aaaaaa 50%);
     background-size: contain;
-    outline: 1em solid white;
+    border: 1em solid white;
 }
 
 /* CUSTOMER AREA */
@@ -138,7 +138,7 @@ body {
     border-radius: 999em;
     background-image: linear-gradient(to right, #dddddd 50%, #aaaaaa 50%);
     background-size: contain;
-    outline: 1.5em solid white;
+    border: 1.5em solid white;
 }
 
 .cus-order {
@@ -154,7 +154,7 @@ body {
     display: flex;
     height: 5em;
     background-color: #aaaaaa;
-    outline: 0.8em solid white;
+    border: 0.8em solid white;
     margin: 1em;
 
     justify-content: center;
@@ -228,7 +228,7 @@ body {
     top: -15em;
     background-color: #ffa64d;
     z-index: 9999;
-    outline: 2em solid #ffffff;
+    border: 2em solid #ffffff;
     border-radius: 5em;
 
     display: flex;
@@ -260,7 +260,7 @@ body {
     left: -45em;
     top: -25em;
     background-color: #ffd24d;
-    outline: 2em solid #ffffff;
+    border: 2em solid #ffffff;
     border-radius: 5em;
     z-index: 9998;
 }
@@ -300,7 +300,7 @@ body {
     /* position: inherit; */
     background-image: linear-gradient(to bottom, #ffe699 50%, #ffd24d 50%);
     border-radius: 100em;
-    outline: 0.8em solid #8c6900;
+    border: 0.8em solid #8c6900;
     margin: 4em;
 
     display: flex;
@@ -350,7 +350,7 @@ body {
     border-radius: 100em;
     background-color: #aaaaaa;
     background-size: contain;
-    outline: #ffffff 2em solid;
+    border: #ffffff 2em solid;
 
     z-index: 1000;
     position: inherit;
