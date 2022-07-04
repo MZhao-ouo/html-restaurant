@@ -58,19 +58,43 @@ body {
     justify-content: center;
 }
 
-.cooks span {
+.cook {
     margin: 4em;
     width: 20em;
     height: 20em;
+}
+
+.cook-avatar {
+    width: 20em;
+    height: 20em;
     border-radius: 100em;
-    background-image:  url(src/cook.png), linear-gradient(to right, #dddddd 50%, #aaaaaa 50%);
+    background-image: url(src/cook.png), linear-gradient(to right, #dddddd 50%, #aaaaaa 50%);
     background-size: contain;
-    outline: 1em solid white;
+    border: 1em solid white;
+}
+
+.cooking-name {
+    margin-top: -5em;
+    width: 20em;
+    height: 4em;
+    border: 1em solid white;
+    background-color: #ffffff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cooking-name p {
+    font-size: 3.2em;
 }
 
 #cookadd {
+    border-radius: 100em;
     background-image: none;
-    background-image:  url(src/no-chef.png);
+    background-image: url(src/no-chef.png), linear-gradient(to right, #dddddd 50%, #aaaaaa 50%);
+    background-size: contain;
+    outline: 1em solid white;
 }
 
 /* CUSTOMER AREA */
@@ -118,7 +142,7 @@ body {
 }
 
 .cus-order {
-    width: 18em;
+    width: 20em;
     margin: 1em;
     margin-left: -5em;
     display: flex;
@@ -132,16 +156,29 @@ body {
     background-color: #aaaaaa;
     outline: 0.8em solid white;
     margin: 1em;
+
+    justify-content: center;
+    align-items: center;
+    /* 文字自动折行 */
+    overflow:hidden;
+    word-wrap:break-word;
+    word-break:break-all;
+}
+
+.orders p {
+    font-size: 3em;
+    font-weight: 600;
+    color: #503a02;
 }
 
 /* 等待区 */
 
-.waiting {
+.waiting_list {
     display: flex;
     justify-content: flex-end;
     justify-items: center;
     align-items: center;
-    width: 90%;
+    width: 95%;
     height: 18em;
     margin: 0;
 
@@ -152,9 +189,9 @@ body {
     z-index: 998;
 }
 
-.waiting span {
-    width: 16em;
-    height: 16em;
+.waiting {
+    width: 15em;
+    height: 15em;
     margin: -2em;
     border-radius: 100em;
     border: 2em solid #ffffff;
@@ -312,6 +349,7 @@ body {
     height: 20em;
     border-radius: 100em;
     background-color: #aaaaaa;
+    background-size: contain;
     outline: #ffffff 2em solid;
 
     z-index: 1000;
