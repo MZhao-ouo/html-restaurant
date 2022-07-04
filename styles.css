@@ -90,6 +90,9 @@ body {
 }
 
 #cookadd {
+    margin: 4em;
+    width: 20em;
+    height: 20em;
     border-radius: 100em;
     background-image: none;
     background-image: url(src/no-chef.png), linear-gradient(to right, #dddddd 50%, #aaaaaa 50%);
