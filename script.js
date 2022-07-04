@@ -7,6 +7,16 @@ function getRandomIntInclusive(min, max) {
 //同步金币
 function show_money() {
     money.children[0].textContent = total_money;
+    if (total_money < 0) {
+        show_predef("shadow_id");
+        show_FlashNotice("GAME OVER");
+    }
+}
+//同步时间
+function show_date() {
+    let day = days % 7 + 1;
+    let week = Math.floor(days / 7) + 1;
+    date.children[0].textContent = `W${week} D${day}`;
 }
 //显示预定义的block
 function show_predef(...ids) {
@@ -30,16 +40,18 @@ function show_FlashNotice(s) {
 }
 //页面的起始弹窗
 function startup_pop() {
-    // 遮罩
     show_predef("shadow_id", "dialog_id");
     let start_button = document.querySelector("#FWbutton");
-    start_button.addEventListener("click", hide_predef("shadow_id", "dialog_id"));
+    start_button.addEventListener("click", ()=>{hide_predef("shadow_id", "dialog_id")});
 }
 //点击waiting头像，开始点餐
 function order_start() {
     if (cus_number >= 4) {
         show_FlashNotice("没有空位了");
         return ;
+    }
+    if (wait_number <= 0) {
+        return ; 
     }
     show_predef("shadow_id", "menu_id");
     let menu = document.getElementById("menu");
@@ -83,7 +95,6 @@ function order_confirm() {
             checkbox.checked = false;            
         }
     }
-
     add_customer(dishes);
     order_cancel();
 }
@@ -141,6 +152,7 @@ function add_customer(dishes) {
         
                 let order_tmp = document.createElement("div");
                 order_tmp.setAttribute("class", "orders");
+                order_tmp.setAttribute("status", "waiting");
                 let order_p = document.createElement("p");
                 order_p.textContent = dish_name;
                 order_tmp.append(order_p);
@@ -152,6 +164,11 @@ function add_customer(dishes) {
             cus_number++;
             wait_number--;
             waiting_list.removeChild(waiting_list.children[0]);
+
+            setTimeout(()=>{
+                rm_customer(sit);
+                show_FlashNotice("客人都等菜半天了，气冲冲地走了");
+            }, 15000);
 
             return ;
         }
@@ -171,20 +188,30 @@ function rm_customer(customer) {
 }
 //新到等位
 function new_waiting() {
-    if (wait_number >= 6) {
-        return ;
-    }
+    if (wait_number >= 6 || to_wait<= 0) { return ; }
+
     let wait_tmp = document.createElement("span");
     wait_tmp.setAttribute("class", "waiting");
     let rand_num = getRandomIntInclusive(1, 7);
+    if (have_come.includes(rand_num)) { return ; }
 
     let avatar_tmp = "./src/customer" + String(rand_num) + ".png";
-    let bkColor = "linear-gradient(to right, #ff2626 50%, #b20000 50%)"
+    let bkColor = gradient_list[rand_num%5];
     // 格式化字符串 https://www.letianbiji.com/web-front-end/js-string-format.html
     wait_tmp.style.backgroundImage = `url(${avatar_tmp}), ${bkColor}`;
 
     waiting_list.append(wait_tmp);
+    have_come.push(rand_num);
     wait_number++;
+    to_wait--;
+
+    setTimeout(()=>{
+        if (waiting_list.children[0] == wait_tmp) {
+            show_FlashNotice("客人都排队半天了，气冲冲地走了");
+            waiting_list.removeChild(waiting_list.children[0]);
+            order_cancel();
+        }
+    }, 15000);
 }
 // 检查是否有需要做的菜
 function check_cook() {
@@ -204,20 +231,23 @@ function check_cook() {
 // 做菜
 function cooking_fc(cook) {
     let dish = cook.children[1].children[0].textContent;
+    let cooking_time = main_dish.includes(dish) ? 8000 : 4000 ;
 
     setTimeout(()=>{
         cook.children[1].children[0].textContent = "";
         cook.setAttribute("status", "empty");
         server(dish);
-    }, 3000);
+    }, cooking_time);
 }
 // 上菜
 function server(dish) {
+    let eating_time = main_dish.includes(dish) ? 6000 : 3000;
     for (let sit of customers) {
         let dishes = sit.children[1].getElementsByClassName("orders");
         for (let order_dish of dishes) {
-            if (order_dish.children[0].textContent == dish) {
-                order_dish.style.backgroundColor = "green";
+            if (order_dish.children[0].textContent == dish && order_dish.attributes["status"].value == "waiting") {
+                order_dish.style.backgroundColor = "#82ff2d";
+                order_dish.setAttribute("status", "eating");
                 setTimeout(()=>{
                     order_dish.parentNode.removeChild(order_dish);
                     if (sit.children[1].children.length == 0) {
@@ -229,32 +259,51 @@ function server(dish) {
                             total_money += Number(checkbox.parentNode.children[1].children[2].textContent.replace("￥", ""));
                         } 
                     }
-                }, 1000);
+                }, eating_time);
                 return true;
             }
         }
     }
+
     return false;
+}
+//新的一天
+function newday() {
+    days++;
+    to_wait = getRandomIntInclusive(5,7);
+    have_come = [];
+    if (days % 7 == 0 && days != 0) {
+        let salary = 100*cook_number;
+        show_FlashNotice(`一周过去了，给厨师发工资 ${salary} ￥`);
+        total_money -= salary;
+    }
 }
 ///////////////////////////////////////////////////////////////////////////////
 
-startup_pop();
-
 // 游戏数据初始化
+days = -1;
 total_money = 233;
 cook_number = 1;
 cus_number = 0;
 wait_number = 0;
+to_wait = 0;
 to_cook_list = [];
-cooking_list = [];
-cooked_list = [];
+have_come = [];
 
-FlashNotice = document.getElementById("FlashNotice_id");
-money = document.getElementById("money");
-waiting_list = document.getElementsByClassName("waiting_list")[0];
-customers = document.getElementsByClassName("customer");
-cooks = document.getElementsByClassName("cook");
-checkboxes = document.getElementsByTagName("input");
+main_dish = ["UL炖LI", "红烧HEAD", "酥炸ECharts", "炙烤CSS", "清蒸DIV"];
+gradient_list = ["linear-gradient(to right, #ff2626 50%, #b20000 50%)",
+                 "linear-gradient(to right, #80ff00 50%, #00b200 50%)",
+                 "linear-gradient(to right, #ff9122 50%, #d96d00 50%)",
+                 "linear-gradient(to right, #2693ff 50%, #006dd9 50%)",
+                 "linear-gradient(to right, #ac91ff 50%, #7a4dff 50%)"];
+
+date =          document.getElementById("date");
+FlashNotice =   document.getElementById("FlashNotice_id");
+money =         document.getElementById("money");
+waiting_list =  document.getElementsByClassName("waiting_list")[0];
+customers =     document.getElementsByClassName("customer");
+cooks =         document.getElementsByClassName("cook");
+checkboxes =    document.getElementsByTagName("input");
 
 order = document.querySelector(".waiting_list");
 order.addEventListener("click", order_start);
@@ -262,6 +311,11 @@ order.addEventListener("click", order_start);
 cookadd = document.getElementById("cookadd");
 cookadd.addEventListener("click", query_newcook);
 
+startup_pop();
+newday();
+
 setInterval(show_money, 1);
+setInterval(show_date, 1);
 setInterval(new_waiting, 3000);
 setInterval(check_cook, 100);
+setInterval(newday, 35000);

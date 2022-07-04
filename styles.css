@@ -135,8 +135,8 @@ body {
 .cus-avatar {
     margin: 0;
     padding: 0;
-    width: 20em;
-    height: 20em;
+    width: 18em;
+    height: 18em;
     border-radius: 999em;
     background-image: linear-gradient(to right, #dddddd 50%, #aaaaaa 50%);
     background-size: contain;
@@ -144,7 +144,7 @@ body {
 }
 
 .cus-order {
-    width: 20em;
+    width: 22em;
     margin: 1em;
     margin-left: -5em;
     display: flex;
@@ -168,7 +168,7 @@ body {
 }
 
 .orders p {
-    font-size: 3em;
+    font-size: 2.8em;
     font-weight: 600;
     color: #503a02;
 }
@@ -228,7 +228,7 @@ body {
     position: absolute;
     left: -30em;
     top: -15em;
-    background-color: #ffa64d;
+    background-color: #66d0f8;
     z-index: 9999;
     border: 2em solid #ffffff;
     border-radius: 5em;
@@ -259,7 +259,7 @@ body {
     width: 90em;
     height: 50em;
     position: absolute;
-    left: -45em;
+    left: -47em;
     top: -25em;
     background-color: #ffd24d;
     border: 2em solid #ffffff;
