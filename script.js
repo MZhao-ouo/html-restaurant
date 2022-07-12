@@ -10,6 +10,7 @@ function show_money() {
     if (total_money < 0) {
         show_predef("shadow_id");
         show_FlashNotice("GAME OVER");
+        timeOff();
     }
 }
 //同步时间
@@ -42,7 +43,7 @@ function show_FlashNotice(s) {
 function startup_pop() {
     show_predef("shadow_id", "dialog_id");
     let start_button = document.querySelector("#FWbutton");
-    start_button.addEventListener("click", ()=>{hide_predef("shadow_id", "dialog_id")});
+    start_button.addEventListener("click", ()=>{timeOn();hide_predef("shadow_id", "dialog_id")});
 }
 //点击waiting头像，开始点餐
 function order_start() {
@@ -90,7 +91,7 @@ function order_confirm() {
             let chosen_dish = checkbox.parentNode.children[1];
             dishes.push(chosen_dish);
             let spend_money = chosen_dish.children[2].textContent;
-            spend_money = Number(spend_money.replace("￥", ""));
+            spend_money = dishes_price[spend_money];
             // total_money += spend_money; 
             checkbox.checked = false;            
         }
@@ -139,6 +140,10 @@ function add_cook() {
     }
     query_hiden();
 }
+//解雇厨师
+function rm_cook() {
+
+}
 //添加顾客
 function add_customer(dishes) {
     for (let sit of customers) {
@@ -148,7 +153,7 @@ function add_customer(dishes) {
 
             for (let dish of dishes) {
                 let dish_name = dish.children[0].textContent;
-                let dish_price = Number(dish.children[2].textContent.replace("￥", ""));
+                let dish_price = dishes_price[dish_name];
         
                 let order_tmp = document.createElement("div");
                 order_tmp.setAttribute("class", "orders");
@@ -165,7 +170,7 @@ function add_customer(dishes) {
             wait_number--;
             waiting_list.removeChild(waiting_list.children[0]);
 
-            setTimeout(()=>{
+            table_timer[sit.attributes["id"].value] = setTimeout(()=>{
                 rm_customer(sit);
                 show_FlashNotice("客人都等菜半天了，气冲冲地走了");
             }, 15000);
@@ -180,6 +185,7 @@ function rm_customer(customer) {
     let cusOrder = customer.children[1];
     cusAvatar.style.backgroundImage = "linear-gradient(to right, #dddddd 50%, #aaaaaa 50%)";
     customer.setAttribute("status", "empty");
+    clearTimeout(table_timer[customer.attributes["id"].value]);
     // 优雅地移除所有子节点 https://developer.mozilla.org/zh-CN/docs/Web/API/Node/removeChild
     while (cusOrder.firstChild) {
         cusOrder.removeChild(cusOrder.firstChild);
@@ -188,7 +194,7 @@ function rm_customer(customer) {
 }
 //新到等位
 function new_waiting() {
-    if (wait_number >= 6 || to_wait<= 0) { return ; }
+    if (wait_number >= 6 || to_wait < 0) { return ; }
 
     let wait_tmp = document.createElement("span");
     wait_tmp.setAttribute("class", "waiting");
@@ -209,6 +215,7 @@ function new_waiting() {
         if (waiting_list.children[0] == wait_tmp) {
             show_FlashNotice("客人都排队半天了，气冲冲地走了");
             waiting_list.removeChild(waiting_list.children[0]);
+            wait_number--;
             order_cancel();
         }
     }, 15000);
@@ -246,6 +253,13 @@ function server(dish) {
         let dishes = sit.children[1].getElementsByClassName("orders");
         for (let order_dish of dishes) {
             if (order_dish.children[0].textContent == dish && order_dish.attributes["status"].value == "waiting") {
+                timerID = sit.attributes["id"].value;
+                clearTimeout(table_timer[timerID]);
+                table_timer[timerID] = setTimeout(()=>{
+                    rm_customer(sit);
+                    show_FlashNotice("客人都等菜半天了，气冲冲地走了");
+                }, 15000);
+
                 order_dish.style.backgroundColor = "#82ff2d";
                 order_dish.setAttribute("status", "eating");
                 setTimeout(()=>{
@@ -256,7 +270,7 @@ function server(dish) {
                     // 付钱
                     for (let checkbox of checkboxes) {
                         if (checkbox.parentNode.children[1].children[0].textContent == dish) {
-                            total_money += Number(checkbox.parentNode.children[1].children[2].textContent.replace("￥", ""));
+                            total_money += dishes_price[dish]; 
                         } 
                     }
                 }, eating_time);
@@ -278,6 +292,22 @@ function newday() {
         total_money -= salary;
     }
 }
+//时间流转
+function timeOn() {
+    ITV_money = setInterval(show_money, 1);
+    ITV_date = setInterval(show_date, 1);
+    ITV_wait = setInterval(new_waiting, 3000);
+    ITV_cook = setInterval(check_cook, 100);
+    ITV_newday = setInterval(newday, 35000);
+}
+//时间冻结
+function timeOff() {
+    clearInterval(ITV_money);
+    clearInterval(ITV_date);
+    clearInterval(ITV_wait);
+    clearInterval(ITV_cook);
+    clearInterval(ITV_newday);
+}
 ///////////////////////////////////////////////////////////////////////////////
 
 // 游戏数据初始化
@@ -289,8 +319,10 @@ wait_number = 0;
 to_wait = 0;
 to_cook_list = [];
 have_come = [];
+table_timer = {c1:0, c2:0, c3:0, c4:0};
 
 main_dish = ["UL炖LI", "红烧HEAD", "酥炸ECharts", "炙烤CSS", "清蒸DIV"];
+dishes_price = {凉拌SAN:6, 冷切DOM:4, UL炖LI:12, 红烧HEAD:15, 酥炸ECharts:18, 炙烤CSS:16, 清蒸DIV:12, 鲜榨flex:5, 小程序奶茶:6};
 gradient_list = ["linear-gradient(to right, #ff2626 50%, #b20000 50%)",
                  "linear-gradient(to right, #80ff00 50%, #00b200 50%)",
                  "linear-gradient(to right, #ff9122 50%, #d96d00 50%)",
@@ -313,9 +345,3 @@ cookadd.addEventListener("click", query_newcook);
 
 startup_pop();
 newday();
-
-setInterval(show_money, 1);
-setInterval(show_date, 1);
-setInterval(new_waiting, 3000);
-setInterval(check_cook, 100);
-setInterval(newday, 35000);
