@@ -58,9 +58,11 @@ function order_start() {
     if (wait_number <= 0) {
         return ; 
     }
+    let menu =          document.getElementById("menu");
+    let menu_details =  document.getElementById("menu_details");
     show_predef("shadow_id", "menu_id");
-    let menu = document.getElementById("menu");
     menu.children[0].style.backgroundImage = waiting_list.children[0].style.backgroundImage;
+    menu_details.textContent = `${waiting_list.children[0].children[0].children[0].textContent}正在点菜`;
 
     confirm_button = document.getElementById("confirm-button");
     cancel_button = document.getElementById("cancel-button");
@@ -178,6 +180,13 @@ function add_customer(dishes) {
         if (sit.attributes["status"].value == "empty") {
             sit.setAttribute("status", "busy");
             sit.children[0].style.backgroundImage = waiting_list.children[0].style.backgroundImage;
+            // 添加名字
+            let cus_p = document.createElement("p");
+            cus_p.textContent = waiting_list.children[0].children[0].children[0].textContent;
+            let cus_name = document.createElement("div");
+            cus_name.setAttribute("class", "cus_name");
+            cus_name.appendChild(cus_p);
+            sit.children[0].appendChild(cus_name);
 
             for (let dish of dishes) {
                 let dish_name = dish.children[0].textContent;
@@ -198,8 +207,13 @@ function add_customer(dishes) {
             wait_number--;
             waiting_list.removeChild(waiting_list.children[0]);
 
+            setTimeout(()=>{
+                cus_name.style = "transition:--progress 15000ms linear; --progress:100%";
+            },100);
+
             table_timer[sit.attributes["id"].value] = setTimeout(()=>{
                 if (!gameover) {
+                    cus_name.style = "transition:--progress 460ms linear; --progress:0%";
                     rm_customer(sit);
                     show_FlashNotice("客人都等菜半天了，气冲冲地走了");                    
                 }
@@ -221,36 +235,50 @@ function rm_customer(customer) {
     while (cusOrder.firstChild) {
         cusOrder.removeChild(cusOrder.firstChild);
     }
+    while (cusAvatar.firstChild) {
+        cusAvatar.removeChild(cusAvatar.firstChild);
+    }
     cus_number--;
 }
 //新到等位
 function new_waiting() {
     if (wait_number >= 6 || to_wait < 0) { return ; }
+    let rand_num = getRandomIntInclusive(1, 7);
+    if (have_come.includes(rand_num)) { return ; }
 
     let wait_tmp = document.createElement("span");
     wait_tmp.setAttribute("class", "waiting");
-    let rand_num = getRandomIntInclusive(1, 7);
-    if (have_come.includes(rand_num)) { return ; }
+    let wait_str = waiting_names[rand_num-1];
+    let wait_p = document.createElement("p");
+    wait_p.textContent = wait_str;
+    let wait_name = document.createElement("div");
+    wait_name.setAttribute("class", "wait_name");
 
     let avatar_tmp = "./src/customer" + String(rand_num) + ".png";
     let bkColor = gradient_list[rand_num%5];
     // 格式化字符串 https://www.letianbiji.com/web-front-end/js-string-format.html
     wait_tmp.style.backgroundImage = `url(${avatar_tmp}), ${bkColor}`;
 
+    wait_name.appendChild(wait_p);
+    wait_tmp.appendChild(wait_name);
     waiting_list.append(wait_tmp);
     have_come.push(rand_num);
     wait_number++;
     to_wait--;
 
     setTimeout(()=>{
+        wait_name.style = "transition: --progress 15000ms linear; --progress:100%";
+    }, 100);
+
+    setTimeout(()=>{
         if (waiting_list.children[0] == wait_tmp) {
             if (!gameover) {
-                show_FlashNotice("客人都排队半天了，气冲冲地走了");
+                wait_name.style = "transition: --progress 460ms linear; --progress:0%";
+                show_FlashNotice(`客人${wait_str}都排队半天了，气冲冲地走了`);
                 waiting_list.removeChild(waiting_list.children[0]);
                 wait_number--;
                 order_cancel();                
             }
-
         }
     }, 15000);
 }
@@ -274,11 +302,14 @@ function cooking_fc(cook) {
     let dish = cook.children[2].children[0].textContent;
     let cooking_time = main_dish.includes(dish) ? 8000 : 4000 ;
 
-    setTimeout(()=>{
+    cook.children[2].style = `transition: --progress ${cooking_time}ms linear; --progress:100%; `;
+
+    setTimeout(()=>{ 
         if (!gameover) {
             cook.children[2].children[0].textContent = "";
             cook.setAttribute("status", "empty");
-            server(dish);            
+            server(dish);
+            cook.children[2].style = `transition: --progress ${460}ms linear; --progress:0%; `;
         }
     }, cooking_time);
 }
@@ -289,20 +320,27 @@ function server(dish) {
         let dishes = sit.children[1].getElementsByClassName("orders");
         for (let order_dish of dishes) {
             if (order_dish.children[0].textContent == dish && order_dish.attributes["status"].value == "waiting") {
-                timerID = sit.attributes["id"].value;
+                let timerID = sit.attributes["id"].value;
+                let cus_name = sit.children[0].children[0];
                 clearTimeout(table_timer[timerID]);
+                cus_name.style = "transition:--progress 460ms linear; --progress:20%";
+                setTimeout(()=>{
+                    cus_name.style = "transition:--progress 12000ms linear; --progress:100%";
+                }, 100);
                 table_timer[timerID] = setTimeout(()=>{
                     if (!gameover) {
+                        cus_name.style = "transition:--progress 460ms linear; --progress:0%";
                         rm_customer(sit);
-                        show_FlashNotice("客人都等菜半天了，气冲冲地走了");                        
+                        show_FlashNotice(`客人${cus_name.children[0].textContent}都等菜半天了，气冲冲地走了`); 
                     }
-                }, 15000);
+                }, 12000);
 
-                order_dish.style.backgroundColor = "#82ff2d";
+                order_dish.style = `transition: --progress ${eating_time}ms linear; --progress:100%;`
                 order_dish.setAttribute("status", "eating");
                 setTimeout(()=>{
                     if (!gameover) {
                         order_dish.parentNode.removeChild(order_dish);
+                        order_dish.style = `transition: --progress ${460}ms linear; --progress:0%;`
                         if (sit.children[1].children.length == 0) {
                             rm_customer(sit);
                         }
@@ -311,7 +349,7 @@ function server(dish) {
                             if (checkbox.parentNode.children[1].children[0].textContent == dish) {
                                 total_money += dishes_price[dish]; 
                             } 
-                        }                        
+                        } 
                     }
                 }, eating_time);
                 return true;
@@ -363,6 +401,7 @@ table_timer = {c1:0, c2:0, c3:0, c4:0};
 cross_set = [];
 gameover = 0;
 
+waiting_names = ["Elon", "Tim", "Linus", "Jobs", "Craig", "Notch", "jeb_"]
 main_dish = ["UL炖LI", "红烧HEAD", "酥炸ECharts", "炙烤CSS", "清蒸DIV"];
 dishes_price = {凉拌SAN:6, 冷切DOM:4, UL炖LI:12, 红烧HEAD:15, 酥炸ECharts:18, 炙烤CSS:16, 清蒸DIV:12, 鲜榨flex:5, 小程序奶茶:6};
 gradient_list = ["linear-gradient(to right, #ff2626 50%, #b20000 50%)",
