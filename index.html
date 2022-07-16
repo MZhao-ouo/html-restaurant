@@ -23,6 +23,7 @@
         <div class="cook-area">
             <div class="cooks">
                 <span class="cook" status="empty">
+                    <div class="cross_icon" style="display: none;">X</div>
                     <div class="cook-avatar"></div>
                     <div class="cooking-name"><p></p></div>
                 </span>
@@ -95,6 +96,24 @@
                             <p>是的，确认招聘</p>
                         </div>
                         <div class="button" id="cancel-newcook">
+                            <p>先不了</p>
+                        </div>
+                    </div>
+                </div>           
+            </div>
+
+            <!-- 解雇厨师对话框 -->
+            <div class="point" id="rmcook_id">
+                <div class="dialog">
+                    <div class="dialog-text">
+                        <h1>解雇该厨师</h1>
+                        <p>解雇厨师需要支付140￥费用<br>请问是否确认解雇该厨师？</p>
+                    </div>
+                    <div class="g-button">
+                        <div class="button" id="confirm-rmcook">
+                            <p>是的，确认解雇</p>
+                        </div>
+                        <div class="button" id="cancel-rmcook">
                             <p>先不了</p>
                         </div>
                     </div>
