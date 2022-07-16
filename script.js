@@ -47,7 +47,7 @@ function show_FlashNotice(s) {
 function startup_pop() {
     show_predef("shadow_id", "dialog_id");
     let start_button = document.querySelector("#FWbutton");
-    start_button.addEventListener("click", ()=>{timeOn();hide_predef("shadow_id", "dialog_id")});
+    start_button.addEventListener("click", ()=>{timeOn();newday();hide_predef("shadow_id", "dialog_id")});
 }
 //点击waiting头像，开始点餐
 function order_start() {
@@ -190,7 +190,6 @@ function add_customer(dishes) {
 
             for (let dish of dishes) {
                 let dish_name = dish.children[0].textContent;
-                let dish_price = dishes_price[dish_name];
         
                 let order_tmp = document.createElement("div");
                 order_tmp.setAttribute("class", "orders");
@@ -361,6 +360,7 @@ function server(dish) {
 }
 //新的一天
 function newday() {
+    date.style = "transition:--progress 99ms linear; --progress:0%";
     days++;
     to_wait = getRandomIntInclusive(5,7);
     have_come = [];
@@ -369,6 +369,7 @@ function newday() {
         show_FlashNotice(`一周过去了，给厨师发工资 ${salary} ￥`);
         total_money -= salary;
     }
+    setTimeout(()=>{date.style = "transition:--progress 35000ms linear; --progress:100%"}, 100);
 }
 //时间流转
 function timeOn() {
@@ -377,6 +378,7 @@ function timeOn() {
     ITV_wait = setInterval(new_waiting, 3000);
     ITV_cook = setInterval(check_cook, 100);
     ITV_newday = setInterval(newday, 35000);
+    date.style = "transition:--progress 99ms linear; --progress:0%"
 }
 //时间冻结
 function timeOff() {
@@ -425,4 +427,3 @@ cookadd = document.getElementById("cookadd");
 cookadd.addEventListener("click", query_newcook);
 
 startup_pop();
-newday();
