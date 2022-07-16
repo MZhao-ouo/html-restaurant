@@ -62,6 +62,8 @@ body {
     margin: 4em;
     width: 20em;
     height: 20em;
+
+    position: relative;
 }
 
 .cook-avatar {
@@ -97,6 +99,26 @@ body {
     background-image: url(src/no-chef.png), linear-gradient(to right, #dddddd 50%, #aaaaaa 50%);
     background-size: contain;
     border: 1em solid white;
+}
+
+.cross_icon {
+    border-radius: 999em;
+    background-color: #5454549c;
+    width: 1.6em;
+    height: 1.6em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
+    color: #ffffffc0;
+    font-size: 42px;
+    font-weight: bolder;
+
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translate(40%, -20%);
+
 }
 
 /* CUSTOMER AREA */
@@ -425,12 +447,12 @@ body {
     width: 95%;
 }
 
-#confirm-button, #confirm-newcook {
+#confirm-button, #confirm-newcook, #confirm-rmcook {
     flex: 3 1 0;
     height: 12em;
 }
 
-#cancel-button, #cancel-newcook {
+#cancel-button, #cancel-newcook, #cancel-rmcook {
     flex: 2 1 0;
     height: 12em;
 }
