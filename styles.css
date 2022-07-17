@@ -520,3 +520,7 @@ body {
     flex: 2 1 0;
     height: 12em;
 }
+
+p {
+    white-space: pre-line;
+}

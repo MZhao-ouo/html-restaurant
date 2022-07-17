@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>MOOC_restaurant</title>
+        <title>CyberRestaurant</title>
         <link rel="stylesheet" href="styles.css">
         <!-- <script src="./test.js" async></script> -->
         <script src="./script.js" async></script>
@@ -22,7 +22,7 @@
 
         <div class="cook-area">
             <div class="cooks">
-                <span class="cook" status="empty">
+                <span class="cook" status="empty" workday="-1">
                     <div class="cross_icon" style="display: none;">X</div>
                     <div class="cook-avatar"></div>
                     <div class="cooking-name"><p></p></div>
@@ -70,7 +70,7 @@
             <div class="point" id="dialog_id">
                 <div class="dialog">
                     <div class="dialog-text">
-                        <h1>MOOC餐厅开业啦</h1>
+                        <h1>赛博餐厅开业啦</h1>
                         <p>开业！来吃！来赚大钱</p>
                         <div>
                             <span>招聘厨师</span>
@@ -89,7 +89,7 @@
                 <div class="dialog">
                     <div class="dialog-text">
                         <h1>招聘新厨师</h1>
-                        <p>招聘一名新厨师需要每周支付工资￥100<br>请问是否确认招聘？</p>
+                        <p>招聘一名新厨师需要支付保障金140￥<br>之后每周支付工资140￥<br>请问是否确认招聘？</p>
                     </div>
                     <div class="g-button">
                         <div class="button" id="confirm-newcook">
@@ -107,7 +107,7 @@
                 <div class="dialog">
                     <div class="dialog-text">
                         <h1>解雇该厨师</h1>
-                        <p>解雇厨师需要支付140￥费用<br>请问是否确认解雇该厨师？</p>
+                        <p id="fireFee">解雇厨师需要支付实际工作的工资<br>请问是否确认解雇该厨师？</p>
                     </div>
                     <div class="g-button">
                         <div class="button" id="confirm-rmcook">

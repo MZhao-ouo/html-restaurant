@@ -9,7 +9,7 @@ function show_money() {
     money.children[0].textContent = total_money;
     if (total_money < 0) {
         show_predef("shadow_id");
-        show_FlashNotice("GAME OVER");
+        show_FlashNotice("GAME OVER\n您已破产 游戏失败");
         gameover = 1;
         timeOff();
     }
@@ -121,12 +121,13 @@ function query_hiden() {
 }
 //增加厨师
 function add_cook() {
-    if (total_money >= 100) {
-        total_money -= 100;
+    if (total_money >= 140) {
+        total_money -= 140;
 
         let new_cook = document.createElement("span");
         new_cook.setAttribute("status", "empty");
         new_cook.setAttribute("class", "cook");
+        new_cook.setAttribute("workday", "0");
         let cross_icon = document.createElement("div");
         cross_icon.setAttribute("class", "cross_icon");
         cross_icon.textContent = "X"; 
@@ -160,15 +161,23 @@ function rm_cook(cross_icon) {
     show_predef("shadow_id", "rmcook_id");
     let confirm_rmcook = document.getElementById("confirm-rmcook");
     let cancel_rmcook = document.getElementById("cancel-rmcook");
+    let cook = cross_icon.parentNode;
+    let salary = 20 * Number(cook.attributes["workday"].value);
+    let fireFee = document.getElementById("fireFee");
+    fireFee.textContent = `解雇厨师需要支付实际工作的工资${salary}￥\n请问是否确认解雇该厨师？`;
 
     confirm_rmcook.addEventListener("click", ()=>{
-        let cook = cross_icon.parentNode;
-        cook.parentNode.removeChild(cook);
-        cook_number--;
-        if (cook_number < 6) {
-            cookadd.style.display = "initial";
+        if (total_money >= salary) {
+            cook.parentNode.removeChild(cook);
+            cook_number--;
+            if (cook_number < 6) {
+                cookadd.style.display = "initial";
+            }
+            hide_predef("shadow_id", "rmcook_id");
+            total_money -= salary;
+        } else {
+            show_FlashNotice("当前余额不足支付解雇费");
         }
-        hide_predef("shadow_id", "rmcook_id");   
     })
     cancel_rmcook.addEventListener("click", ()=>{
         hide_predef("shadow_id", "rmcook_id");
@@ -360,12 +369,25 @@ function server(dish) {
 }
 //新的一天
 function newday() {
+    // 算工时
+    for (let cook of cooks) {
+        if (cook.id == "cookadd") {break;}
+        let nowdays = Number(cook.attributes["workday"].value)
+        cook.setAttribute("workday", nowdays+1);
+    }
+
     date.style = "transition:--progress 99ms linear; --progress:0%";
     days++;
     to_wait = getRandomIntInclusive(5,7);
     have_come = [];
     if (days % 7 == 0 && days != 0) {
-        let salary = 100*cook_number;
+        let salary = 0;
+        for (let cook of cooks) {
+            if (cook.id == "cookadd") {break;}
+            let nowdays = Number(cook.attributes["workday"].value)
+            salary += (nowdays*20);
+            cook.setAttribute("workday", 0);
+        }
         show_FlashNotice(`一周过去了，给厨师发工资 ${salary} ￥`);
         total_money -= salary;
     }
@@ -392,7 +414,7 @@ function timeOff() {
 
 // 游戏数据初始化
 days = -1;
-total_money = 233;
+total_money = 500;
 cook_number = 1;
 cus_number = 0;
 wait_number = 0;
